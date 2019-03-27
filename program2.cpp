@@ -6,9 +6,24 @@
 
 using namespace std;
 
+string x; // These strings will store the contents of filex.txt and filey.txt
+string y;
+
+int sub(int xi, int yi){
+	if(xi == x.length() || yi == y.length()){
+		return 0;
+	}
+	char one = x.at(xi);
+	char two = y.at(yi);
+	if(one == two ){
+		return 1 + sub(xi+1, yi+1);
+	}else{
+		return max(sub(xi+1, yi), sub(xi, yi+1));
+	}
+}
+
+
 int main(int argc, char *argv[]){
-	string x; // this will store the contents of filex.txt
-	string y; // this will store the contents of filey.txt
 
 	string filex = argv[1]; //these are set to the files given in the program call
 	string filey = argv[2];
@@ -19,22 +34,6 @@ int main(int argc, char *argv[]){
 
 	xfile >> x; //set the file contents to their respective strings
 	yfile >> y;
-
-
-//-------------------- Recursive computing function (no memoization) ------------------
-
-	char one; // used as temporary holders for value at x[x] and y[y]
-	char two;
-
-	int sub(int x, int y){ // this is the subproblem. Find the LCS for the smaller strings
-		one = x.at(x);
-		two = y.at(y);
-		if(one == '\0' || two == '\0'){ // if at end of string, return 0
-			return 0;
-		}else{
-			return max(sub(x+1, y), sub(x, y+1));
-		}
-	}
 
 
 	//NOW LET'S RUN IT!
