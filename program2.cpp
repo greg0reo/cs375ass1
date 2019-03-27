@@ -3,8 +3,10 @@
 #include <fstream>
 #include <algorithm>
 #include <string>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 string x; // These strings will store the contents of filex.txt and filey.txt
 string y;
@@ -38,13 +40,19 @@ int main(int argc, char *argv[]){
 
 	//NOW LET'S RUN IT!
 
+	auto start = high_resolution_clock::now(); //begin timing function
+
 	int answer;
 
 	answer = sub(0, 0);
 
+	auto stop = high_resolution_clock::now();
+	auto duration = duration_cast<microseconds>(stop - start);
+
 	ofstream out;
 	out.open(output);
-	out << answer ;
+	out << answer << "\n";
+	out << duration.count();
 
 	xfile.close();
 	yfile.close();

@@ -3,9 +3,10 @@
 #include <fstream>
 #include <algorithm>
 #include <string>
-
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 string x; // These strings will store teh contents of filex.txt and filey.txt
 string y;
@@ -50,6 +51,8 @@ int main(int argc, char *argv[]){
 
 	//NOW LET'S RUN IT
 
+	auto start = high_resolution_clock::now(); //begin timing program right before any necessary variables are initialized
+
 	int answer;
 
 	int iMax = x.length()+1;
@@ -65,13 +68,31 @@ int main(int argc, char *argv[]){
 	}
 
 
-
+	iMax -= 1;
+	jMax -= 1;
 
 	answer = sub();
 
+	auto stop = high_resolution_clock::now(); // finish timing program after it gets an answer
+	//^^^The same timing is used for the other programs
+
+	auto duration = duration_cast<microseconds>(stop - start);
+
 	ofstream out;
 	out.open(output);
-	out << answer;
+
+	if(iMax <10 && jMax < 10){ // write the matrix out if its smaller than 10x10
+		for(int i = 0; i < iMax; i++){
+			for(int j = 0; j < jMax; j++){
+				out << matrix[i][j];
+			}
+			out << "\n";
+		}
+	}
+
+	out << answer << "\n";
+	out << duration.count();
+
 
 
 	xfile.close();
