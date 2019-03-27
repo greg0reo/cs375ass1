@@ -81,6 +81,27 @@ int main(int argc, char *argv[]){
 
 	auto duration = duration_cast<microseconds>(stop - start); // calculate the total time spent
 
+	string lcs; // this will have the lcs once it is found
+//	string temp; //this will have the character we want to add to the lcs
+
+	int xIt=0; // x iterator
+	int yIt=0; // y iterator
+
+	while(xIt < iMax && yIt < jMax){ //trace the matrix to find the LCS
+		if(x[xIt] == y[yIt]){
+			lcs += x[xIt];
+			xIt++;
+			yIt++;
+		}else{
+			if(matrix[xIt+1][yIt] >= matrix[xIt][yIt+1]){
+				xIt++;
+			}else{
+				yIt++;
+			}
+		}
+	}
+
+
 	ofstream out; // opening an output file to print into
 	out.open(output);
 
@@ -93,7 +114,7 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	out << answer << "\n"; 
+	out << lcs << "\n"; 
 	out << duration.count();
 
 
